@@ -2,7 +2,7 @@
 	"name": "lscache",
 	"version": "1.0.7",
 	"homepage": "https://github.com/pamelafox/lscache",
-	"main": ["lscache.min.js", "lscache.js"],
+	"main": ["lscache.js"],
 	"ignore": [
 		"demo",
 		"tests",
