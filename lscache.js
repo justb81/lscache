@@ -50,6 +50,7 @@
   var cachedJSON;
   var cacheBucket = '';
   var warnings = false;
+  var localStorage = window.localStorage;
 
   // Determines if localStorage is supported in the browser;
   // result is cached for better performance instead of being run each time.
@@ -68,10 +69,12 @@
     // hence check is inside a try/catch
     try {
       if (!localStorage) {
-        return false;
+          cachedStorage = false;
+          return cachedStorage;
       }
     } catch (ex) {
-      return false;
+        cachedStorage = false;
+        return cachedStorage;
     }
 
     try {
@@ -82,6 +85,9 @@
         // If we hit the limit, and we don't have an empty localStorage then it means we have support
         if (isOutOfSpace(e) && localStorage.length) {
             cachedStorage = true; // just maxed it out and even the set test failed.
+        } else if (localStorage === window.localStorage && typeof window.sessionStorage !== "undefined") {
+            localStorage = window.sessionStorage;
+            cachedStorage = supportsStorage();
         } else {
             cachedStorage = false;
         }
